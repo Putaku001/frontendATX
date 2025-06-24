@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, code, newPassword: password });
+      const response = await api.post('/auth/reset-password', { email, code, newPassword: password });
       setMessage(response.data.message);
       alert('Contraseña restablecida exitosamente. Ahora puedes iniciar sesión.');
       navigate('/login'); // Redirigir al login después de restablecer

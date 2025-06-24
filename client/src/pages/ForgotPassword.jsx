@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/forgot-password', { email });
+      const response = await api.post('/auth/forgot-password', { email });
       setMessage(response.data.message);
       // Redirigir a la página de verificación de código, pasando el email
       navigate('/verify-code', { state: { email } }); 

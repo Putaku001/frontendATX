@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
@@ -24,7 +24,7 @@ const VerifyCode = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/verify-reset-code', { email, code });
+      const response = await api.post('/auth/verify-reset-code', { email, code });
       setMessage(response.data.message);
       // Si el código es correcto, redirigir a la página de restablecimiento de contraseña
       navigate('/reset-password', { state: { email, code } });

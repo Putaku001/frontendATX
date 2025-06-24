@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const UserCreate = () => {
   const [formData, setFormData] = useState({
@@ -32,10 +32,7 @@ const UserCreate = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      // La creación de usuarios por el administrador debería ser una ruta diferente,
-      // o el endpoint de registro debe ser accesible solo por administradores o sin autenticación.
-      // Para el propósito de este CRUD, asumimos que el endpoint /api/users (POST) es para admin.
-      await axios.post('http://localhost:3001/api/users', formData, config);
+      await api.post('/users', formData, config);
       setSuccess(true);
       alert('Usuario creado exitosamente!');
       navigate('/admin/users'); // Redirigir a la lista de usuarios

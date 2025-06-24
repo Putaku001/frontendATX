@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import api from '../services/api';
 
 const useListStore = create((set) => ({
   lists: [],
@@ -12,7 +12,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3001/api/lists', {
+      const response = await api.get('/lists', {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ lists: response.data, loading: false });
@@ -29,7 +29,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:3001/api/lists/${id}`, {
+      const response = await api.get(`/lists/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ currentList: response.data, loading: false });
@@ -46,7 +46,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:3001/api/lists', listData, {
+      const response = await api.post('/lists', listData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -68,7 +68,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`http://localhost:3001/api/lists/${id}`, listData, {
+      const response = await api.put(`/lists/${id}`, listData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -93,7 +93,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3001/api/lists/${id}`, {
+      await api.delete(`/lists/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -115,8 +115,8 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `http://localhost:3001/api/lists/${listId}/anime`,
+      const response = await api.post(
+        `/lists/${listId}/anime`,
         { animeId },
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -143,7 +143,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3001/api/lists/${listId}/anime/${animeId}`, {
+      await api.delete(`/lists/${listId}/anime/${animeId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -171,7 +171,7 @@ const useListStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.patch(`http://localhost:3001/api/lists/${id}/top`, {}, {
+      const response = await api.patch(`/lists/${id}/top`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({

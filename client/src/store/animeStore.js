@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import api from '../services/api';
 
 const useAnimeStore = create((set) => ({
   animes: [],
@@ -12,7 +12,7 @@ const useAnimeStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:3001/api/animes', animeData, {
+      const response = await api.post('/animes', animeData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -34,7 +34,7 @@ const useAnimeStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:3001/api/animes/${id}`, {
+      const response = await api.get(`/animes/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ currentAnime: response.data, loading: false });
@@ -53,7 +53,7 @@ const useAnimeStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`http://localhost:3001/api/animes/${id}`, animeData, {
+      const response = await api.put(`/animes/${id}`, animeData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({
@@ -78,7 +78,7 @@ const useAnimeStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3001/api/animes/${id}`, {
+      await api.delete(`/animes/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({

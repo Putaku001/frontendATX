@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const UserEdit = () => {
   const { id } = useParams(); // Obtener el ID del usuario de la URL
@@ -25,7 +25,7 @@ const UserEdit = () => {
             Authorization: `Bearer ${token}`,
           },
         };
-        const response = await axios.get(`http://localhost:3001/api/users/${id}`, config);
+        const response = await api.get(`/users/${id}`, config);
         setFormData({
           username: response.data.username,
           email: response.data.email,
@@ -69,7 +69,7 @@ const UserEdit = () => {
         updateData.password = password; // Solo enviar la contraseña si se ha modificado
       }
 
-      await axios.put(`http://localhost:3001/api/users/${id}`, updateData, config);
+      await api.put(`/users/${id}`, updateData, config);
       setSuccess(true);
       alert('Usuario actualizado exitosamente!');
       navigate('/admin/users');

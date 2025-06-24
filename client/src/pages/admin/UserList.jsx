@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -26,7 +26,7 @@ const UserList = () => {
           limit: itemsPerPage,
         },
       };
-      const response = await axios.get('http://localhost:3001/api/users', config);
+      const response = await api.get('/users', config);
       setUsers(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (err) {
@@ -47,7 +47,7 @@ const UserList = () => {
             Authorization: `Bearer ${token}`,
           },
         };
-        await axios.delete(`http://localhost:3001/api/users/${userId}`, config);
+        await api.delete(`/users/${userId}`, config);
         setUsers(users.filter((user) => user.id !== userId));
         alert('Usuario eliminado exitosamente.');
       } catch (err) {
